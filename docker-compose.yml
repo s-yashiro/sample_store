@@ -26,3 +26,18 @@ services:
     command: mysqld --character-set-server=utf8mb4 --explicit_defaults_for_timestamp=true --default-authentication-plugin=mysql_native_password    
     ports:
       - 3306:3306
+  test-db:
+    restart: always
+    image: mysql:8.0.25
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: app_test
+      MYSQL_USER: www
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+      MYSQL_ROOT_HOST: "%"
+    tty: true
+    command: mysqld --character-set-server=utf8mb4 --explicit_defaults_for_timestamp=true --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3307:3306
