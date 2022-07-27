@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_25_092430) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_27_070649) do
   create_table "bonuses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "bonus_type"
     t.integer "amount"
@@ -50,11 +50,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_25_092430) do
   end
 
   create_table "points", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.bigint "balance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_points_on_user_id"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_points_on_user_id", unique: true
   end
 
   create_table "trade_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
