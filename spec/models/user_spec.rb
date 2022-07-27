@@ -27,4 +27,27 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "Callbacks" do
+    context "Create point" do
+      let(:bonus) {create :bonus, bonus_type: :point, amount: 10000, reward_type: :sign_up}
+      let(:user) {create :user}
+      before do
+        bonus
+        user
+      end
+      it "success" do
+        expect(user.point).to be_present
+      end
+      it "reward bonus points" do
+        expect(user.point.balance).to eq 10000
+      end
+      it "trade log records quantity" do
+        expect(user.trade_logs.last.quantity).to eq 10000
+      end
+      it "trade log records action" do
+        expect(user.trade_logs.last.action).to eq "reward"
+      end
+    end
+  end
 end
