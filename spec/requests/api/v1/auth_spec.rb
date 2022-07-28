@@ -18,12 +18,12 @@ RSpec.describe "Authentication", type: :request do
     context "Fail" do
       let(:invalid_params) do
         {
-          "email": "email@example.com",
+          "email": nil,
           "password": nil,
           "password_confirmation": nil
         }
       end
-      it "without any of email、password" do
+      it "without email、password" do
         post '/api/v1/auth', params: invalid_params
         expect(response.status).to eq(422)
       end
