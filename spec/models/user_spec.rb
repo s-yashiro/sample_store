@@ -17,14 +17,6 @@ RSpec.describe User, type: :model do
         user = build(:user, email: nil)
         expect(user).to be_invalid
       end
-      it "without password" do
-        user = build(:user, password: nil)
-        expect(user).to be_invalid
-      end
-      it "without password_confirmation" do
-        user = build(:user, password_confirmation: nil)
-        expect(user).to be_invalid
-      end
     end
   end
 
