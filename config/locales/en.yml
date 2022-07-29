@@ -2,3 +2,7 @@ en:
   errors:
     item:
       not_found: Item not found.
+    purchase:
+      insufficient: Insufficient funds
+      duplicated: Already purchased
+      sold_out: Sold out

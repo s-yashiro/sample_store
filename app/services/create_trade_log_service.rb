@@ -14,6 +14,8 @@ class CreateTradeLogService
     save_log
   end
 
+  private
+
   def save_log
     user.trade_logs.create! user: user, log_type: log_type, action: action,
       order_id: order_id, quantity: quantity, total: total
