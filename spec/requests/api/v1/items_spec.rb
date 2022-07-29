@@ -64,7 +64,7 @@ RSpec.describe "Api::V1::Items", type: :request do
       end
     end
     context "failure with invalid user" do
-      let(:user2) { build :user }
+      let(:user2) { create :user, email: "test2@example.com" }
       before do
         item.update!(seller: user2)
         patch patch_path, params: params, as: :json, headers: headers
