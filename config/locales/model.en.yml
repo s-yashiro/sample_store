@@ -1,0 +1,16 @@
+en:
+  activerecord:
+    attributes:
+      item:
+        name: Item name
+        price: Price
+        status: Status
+        seller_id: Seller
+    errors:
+      models:
+        item:
+          attributes:
+            price:
+              blank: is not set
+            name:
+              blank: is not set

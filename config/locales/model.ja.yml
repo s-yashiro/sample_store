@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    attributes:
+      item:
+        name: 商品名
+        price: 価格
+        status: ステータス
+        seller_id: 販売者
+    errors:
+      models:
+        item:
+          attributes:
+            price:
+              blank: が設定されていません
+            name:
+              blank: が設定されていません

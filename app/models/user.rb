@@ -7,9 +7,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable
   include DeviseTokenAuth::Concerns::User
 
-  has_many :items, foreign_key: :seller_id
-  has_many :orders, foreign_key: :buyer_id
-  has_one :point
+  has_many :items, foreign_key: :seller_id, dependent: :destroy
+  has_many :orders, foreign_key: :buyer_id, dependent: :destroy
+  has_one :point, dependent: :destroy
   has_many :trade_logs
 
   after_create :reward_sign_up_bonus
