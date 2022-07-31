@@ -1,31 +1,31 @@
 # Sample_store
 
-Sample_store is a demo of the online application for shopping with points.
+ポイントで商品を売買できるAPIのサンプルです。
 
-# Initial setup
+# 初期セットアップ
 
 ```
 $ docker-compose build
 ```
 
-# Running the Rails application
+# Railsサーバー起動
 
 ```
 $ docker-compose up
 ```
 
-# Migration
+# マイグレーション実行と初期データ投入
 
 ```
 $ docker-compose exec app rails db:migrate
 $ docker-compose exec app rails db:seed
 ```
 
-# Usage
+# 使い方
 
-## Sign up
+## ユーザー登録
 
-Request with email, password and password_confirmation for register.
+Eメール、パスワード、確認用パスワードを送信してください。
 
 ```
 curl --request POST \
@@ -34,9 +34,10 @@ curl --request POST \
   --data '{"email":"test@example.com", "password":"password", "password_confirmation": "password"}' -i
 ```
 
-## Sign in
+## ログイン
 
-Note the generated codes of uid, client and access-token for later request with auth.
+ユーザー登録で送信したEメールとパスワードでログインしてください。  
+レスポンスヘッダーに生成された uid、client、access-token が返却されますのでメモをしておいてください。
 
 ```
 curl --request POST \
@@ -46,9 +47,9 @@ curl --request POST \
   -i | grep -e uid -e client -e access-token
 ```
 
-## Create Item
+## 商品登録
 
-Please use the latest credentials you have obtained to access the API.
+ログイン時にメモした認証情報を付与してAPIリクエストを行います。
 
 ```
 curl --request POST \
@@ -60,7 +61,7 @@ curl --request POST \
   --data '{"name":"item", "price":300}'
 ```
 
-## Update Item
+## 商品編集
 
 ```
 curl --request PATCH \
@@ -72,7 +73,7 @@ curl --request PATCH \
   --data '{"price":3020}'
 ```
 
-## Delete Item
+## 商品削除
 
 ```
 curl --request DELETE \
@@ -83,7 +84,7 @@ curl --request DELETE \
   --header 'uid: test@example.com'
 ```
 
-## Purchase Item
+## 商品購入
 
 ```
 curl --request POST \
@@ -100,5 +101,3 @@ curl --request POST \
 ```
 $ docker-compose exec app rspec spec/
 ```
-
-
