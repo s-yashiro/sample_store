@@ -1,6 +1,11 @@
-Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+require 'devise_token_auth'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      mount_devise_token_auth_for 'User', at: 'auth'
+      resources :items, only: [:create, :update, :destroy]
+      resources :purchase, only: [:create]
+    end
+  end
 end

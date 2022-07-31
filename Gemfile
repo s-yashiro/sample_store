@@ -43,12 +43,20 @@ group :development, :test do
   gem 'better_errors'
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'bullet'
 end
 
 gem 'devise'
 gem 'devise_token_auth', '>= 1.2.0', git: "https://github.com/lynndylanhurley/devise_token_auth"
+gem 'devise-i18n'
+gem 'rack-cors'
+
+gem 'active_model_serializers'
+
+gem 'discard', '~> 1.2'
