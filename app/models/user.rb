@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ActiveRecord::Base
+  include Discard::Model
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -13,6 +15,10 @@ class User < ActiveRecord::Base
   has_many :trade_logs
 
   after_create :reward_sign_up_bonus
+
+  def active_for_authentication?
+    super && kept?
+  end
 
   private
   def reward_sign_up_bonus

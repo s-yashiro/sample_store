@@ -15,8 +15,7 @@ class PurchaseService
       purchase
       post_process
     rescue => e
-      err = e.message.start_with?("Mysql2::Error: Duplicate entry") ? I18n.t("errors.purchase.duplicated") : e
-      raise PointPurchaseError, err
+      raise PointPurchaseError, e.message.start_with?("Mysql2::Error: Duplicate entry") ? msg("duplicated") : e
     end
   end
 
@@ -30,11 +29,15 @@ class PurchaseService
   private
 
   def pre_process
-    if item.sold?
-      err = item.order_detail&.buyer_id == user.id ? I18n.t("errors.purchase.duplicated") : I18n.t("errors.purchase.sold_out")
-      raise PointPurchaseError, err
+    case true
+    when item.sold?
+      raise PointPurchaseError, (item.order_detail&.buyer_id == user.id) ? msg("duplicated") : msg("sold_out")
+    when item.discarded?
+      raise PointPurchaseError, msg("discarded")
+    when user.point.insufficient?(item.price)
+      raise PointPurchaseError, msg("insufficient")
+    else
     end
-    raise PointPurchaseError, I18n.t("errors.purchase.insufficient") if user.point.insufficient? item.price
   end
 
   def purchase
@@ -50,5 +53,9 @@ class PurchaseService
     item.update(status: :sold)
     seller_point = Point.find_by user: item.seller
     seller_point.increment_point quantity: item.price, log_type: :point, action: :sell, order_id: order_id
+  end
+
+  def msg type
+    I18n.t("errors.purchase.#{type}")
   end
 end

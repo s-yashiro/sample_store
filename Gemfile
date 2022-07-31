@@ -58,3 +58,5 @@ gem 'devise-i18n'
 gem 'rack-cors'
 
 gem 'active_model_serializers'
+
+gem 'discard', '~> 1.2'

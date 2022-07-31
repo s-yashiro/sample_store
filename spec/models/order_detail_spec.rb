@@ -1,4 +1,4 @@
-spec/models/order_detail_spec.rbrequire 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe OrderDetail, type: :model do
   describe "Associations" do

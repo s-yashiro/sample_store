@@ -71,6 +71,14 @@ RSpec.describe PurchaseService do
           expect{subject.call}.to raise_error PurchaseService::PointPurchaseError, I18n.t("errors.purchase.insufficient")
         end
       end
+      context "item soft deleted" do
+        before do
+          item.discard!
+        end
+        it do
+          expect{subject.call}.to raise_error PurchaseService::PointPurchaseError, I18n.t("errors.purchase.discarded")
+        end
+      end
     end
   end
 end
