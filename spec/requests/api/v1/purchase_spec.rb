@@ -84,5 +84,31 @@ RSpec.describe "Api::V1::Purchases", type: :request do
         expect(response.body).to include "商品が見つかりません"
       end
     end
+    context "failure with multiple request to buy same item" do
+      let(:user2) { create :user, email: "test2@example.com" }
+      let(:user3) { create :user, email: "test3@example.com" }
+      before do
+        user_param = { email: user2.email, password: user2.password }
+        threads = []
+        threads << Thread.new do
+          ActiveRecord::Base.connection_pool.with_connection do
+            post post_path, params: params, as: :json, headers: headers
+          end
+        end
+        user_param = { email: user3.email, password: user3.password }
+        threads << Thread.new do
+          ActiveRecord::Base.connection_pool.with_connection do
+            post post_path, params: params, as: :json, headers: headers
+          end
+        end
+        threads.each(&:join)
+      end
+      it do
+        expect(response.status).to eq 404
+      end
+      it do
+        expect(response.body).to include "商品が見つかりません"
+      end
+    end
   end
 end
