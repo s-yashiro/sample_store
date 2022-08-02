@@ -20,7 +20,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
+    @item.discard!
     render json: { data: {} }, status: :ok
   end
 
